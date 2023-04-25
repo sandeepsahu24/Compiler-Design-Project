@@ -1,0 +1,288 @@
+State 12 conflicts: 2 shift/reduce
+State 15 conflicts: 5 shift/reduce
+
+
+Grammar
+
+    0 $accept: S $end
+
+    1 S: S LIST
+    2  | S ITEM_LIST
+    3  | EMPTY
+
+    4 LIST: UNORDERED_LIST
+    5     | ORDERED_LIST
+
+    6 UNORDERED_LIST: unordered_openTag S unordered_closeTag
+
+    7 ORDERED_LIST: ordered_openTag S ordered_closeTag
+
+    8 ITEM_LIST: ITEM
+    9          | ITEM ITEM_LIST
+
+   10 ITEM: list_openTag S CLOSE_LIST
+   11     | item
+
+   12 CLOSE_LIST: list_closeTag
+   13           | /* empty */
+
+   14 EMPTY: /* empty */
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+unordered_openTag (258) 6
+ordered_openTag (259) 7
+unordered_closeTag (260) 6
+ordered_closeTag (261) 7
+list_openTag (262) 10
+list_closeTag (263) 12
+item (264) 11
+
+
+Nonterminals, with rules where they appear
+
+$accept (10)
+    on left: 0
+S (11)
+    on left: 1 2 3, on right: 0 1 2 6 7 10
+LIST (12)
+    on left: 4 5, on right: 1
+UNORDERED_LIST (13)
+    on left: 6, on right: 4
+ORDERED_LIST (14)
+    on left: 7, on right: 5
+ITEM_LIST (15)
+    on left: 8 9, on right: 2 9
+ITEM (16)
+    on left: 10 11, on right: 8 9
+CLOSE_LIST (17)
+    on left: 12 13, on right: 10
+EMPTY (18)
+    on left: 14, on right: 3
+
+
+state 0
+
+    0 $accept: . S $end
+
+    $default  reduce using rule 14 (EMPTY)
+
+    S      go to state 1
+    EMPTY  go to state 2
+
+
+state 1
+
+    0 $accept: S . $end
+    1 S: S . LIST
+    2  | S . ITEM_LIST
+
+    $end               shift, and go to state 3
+    unordered_openTag  shift, and go to state 4
+    ordered_openTag    shift, and go to state 5
+    list_openTag       shift, and go to state 6
+    item               shift, and go to state 7
+
+    LIST            go to state 8
+    UNORDERED_LIST  go to state 9
+    ORDERED_LIST    go to state 10
+    ITEM_LIST       go to state 11
+    ITEM            go to state 12
+
+
+state 2
+
+    3 S: EMPTY .
+
+    $default  reduce using rule 3 (S)
+
+
+state 3
+
+    0 $accept: S $end .
+
+    $default  accept
+
+
+state 4
+
+    6 UNORDERED_LIST: unordered_openTag . S unordered_closeTag
+
+    $default  reduce using rule 14 (EMPTY)
+
+    S      go to state 13
+    EMPTY  go to state 2
+
+
+state 5
+
+    7 ORDERED_LIST: ordered_openTag . S ordered_closeTag
+
+    $default  reduce using rule 14 (EMPTY)
+
+    S      go to state 14
+    EMPTY  go to state 2
+
+
+state 6
+
+   10 ITEM: list_openTag . S CLOSE_LIST
+
+    $default  reduce using rule 14 (EMPTY)
+
+    S      go to state 15
+    EMPTY  go to state 2
+
+
+state 7
+
+   11 ITEM: item .
+
+    $default  reduce using rule 11 (ITEM)
+
+
+state 8
+
+    1 S: S LIST .
+
+    $default  reduce using rule 1 (S)
+
+
+state 9
+
+    4 LIST: UNORDERED_LIST .
+
+    $default  reduce using rule 4 (LIST)
+
+
+state 10
+
+    5 LIST: ORDERED_LIST .
+
+    $default  reduce using rule 5 (LIST)
+
+
+state 11
+
+    2 S: S ITEM_LIST .
+
+    $default  reduce using rule 2 (S)
+
+
+state 12
+
+    8 ITEM_LIST: ITEM .
+    9          | ITEM . ITEM_LIST
+
+    list_openTag  shift, and go to state 6
+    item          shift, and go to state 7
+
+    list_openTag  [reduce using rule 8 (ITEM_LIST)]
+    item          [reduce using rule 8 (ITEM_LIST)]
+    $default      reduce using rule 8 (ITEM_LIST)
+
+    ITEM_LIST  go to state 16
+    ITEM       go to state 12
+
+
+state 13
+
+    1 S: S . LIST
+    2  | S . ITEM_LIST
+    6 UNORDERED_LIST: unordered_openTag S . unordered_closeTag
+
+    unordered_openTag   shift, and go to state 4
+    ordered_openTag     shift, and go to state 5
+    unordered_closeTag  shift, and go to state 17
+    list_openTag        shift, and go to state 6
+    item                shift, and go to state 7
+
+    LIST            go to state 8
+    UNORDERED_LIST  go to state 9
+    ORDERED_LIST    go to state 10
+    ITEM_LIST       go to state 11
+    ITEM            go to state 12
+
+
+state 14
+
+    1 S: S . LIST
+    2  | S . ITEM_LIST
+    7 ORDERED_LIST: ordered_openTag S . ordered_closeTag
+
+    unordered_openTag  shift, and go to state 4
+    ordered_openTag    shift, and go to state 5
+    ordered_closeTag   shift, and go to state 18
+    list_openTag       shift, and go to state 6
+    item               shift, and go to state 7
+
+    LIST            go to state 8
+    UNORDERED_LIST  go to state 9
+    ORDERED_LIST    go to state 10
+    ITEM_LIST       go to state 11
+    ITEM            go to state 12
+
+
+state 15
+
+    1 S: S . LIST
+    2  | S . ITEM_LIST
+   10 ITEM: list_openTag S . CLOSE_LIST
+
+    unordered_openTag  shift, and go to state 4
+    ordered_openTag    shift, and go to state 5
+    list_openTag       shift, and go to state 6
+    list_closeTag      shift, and go to state 19
+    item               shift, and go to state 7
+
+    unordered_openTag  [reduce using rule 13 (CLOSE_LIST)]
+    ordered_openTag    [reduce using rule 13 (CLOSE_LIST)]
+    list_openTag       [reduce using rule 13 (CLOSE_LIST)]
+    list_closeTag      [reduce using rule 13 (CLOSE_LIST)]
+    item               [reduce using rule 13 (CLOSE_LIST)]
+    $default           reduce using rule 13 (CLOSE_LIST)
+
+    LIST            go to state 8
+    UNORDERED_LIST  go to state 9
+    ORDERED_LIST    go to state 10
+    ITEM_LIST       go to state 11
+    ITEM            go to state 12
+    CLOSE_LIST      go to state 20
+
+
+state 16
+
+    9 ITEM_LIST: ITEM ITEM_LIST .
+
+    $default  reduce using rule 9 (ITEM_LIST)
+
+
+state 17
+
+    6 UNORDERED_LIST: unordered_openTag S unordered_closeTag .
+
+    $default  reduce using rule 6 (UNORDERED_LIST)
+
+
+state 18
+
+    7 ORDERED_LIST: ordered_openTag S ordered_closeTag .
+
+    $default  reduce using rule 7 (ORDERED_LIST)
+
+
+state 19
+
+   12 CLOSE_LIST: list_closeTag .
+
+    $default  reduce using rule 12 (CLOSE_LIST)
+
+
+state 20
+
+   10 ITEM: list_openTag S CLOSE_LIST .
+
+    $default  reduce using rule 10 (ITEM)
