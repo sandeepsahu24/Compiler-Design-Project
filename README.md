@@ -9,3 +9,4 @@ This repository contains :
      I) Syntax
      II) Assumptions
      III) Test Cases
+5. Automaton
